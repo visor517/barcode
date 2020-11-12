@@ -4,71 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        #barcode {
-            width: 300px;
-            height: 96px;
-            margin: 0 auto;
-        }
-        body {
-            background-color:lightgray;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
-    <div id="barcode"></div>
-    <script>
-        var input = {  
-     "id": "ezeb2fve0b",  
-     "code": 10,  
-     "message": "404 Error coffee not found"  
-};
-        var elem = document.getElementById('barcode');
-
-        var canvas = document.createElement('canvas');
-        elem.appendChild(canvas);
-        var context = canvas.getContext("2d");
-        context.fillStyle = "black";
-        [0,9,18,278,287,296].forEach(x => {
-            context.fillRect(x, 0, 4, 96);
-        });
-        context.fillStyle = "white";
-        [4,13,282,291].forEach(x => {
-            context.fillRect(x, 0, 5, 96);
-        });
-
-        var code_str = input.code.toString();
-        while (code_str.length < 3) code_str += '0';
-        while (input.message.length < 34) input.message += ' ';
-
-        var str = ''.concat(input.id, code_str, input.message);
-        var str_arr =[];
-        var sum = 0;
-
-        for (var i=0; i<str.length; i++) {
-            item = str[i].charCodeAt();
-            item_8byt = item.toString(2);
-            sum ^= item;
-            str_arr.push(item_8byt);
-        }
-        str_arr.push(sum.toString(2));
-
-        for (var i=0; i<str_arr.length; i++) {
-            var byt = str_arr[i].toString();
-            while (byt.length < 8) byt = '0' + byt;
-            str_arr[i] = byt;
-        }
-
-        var barcode = str_arr.join('');
-
-        var i = 0;
-        for (var y = 0; y < 12; y++) {
-            for (var x = 0; x < 32; x++) {
-                context.fillStyle = (barcode[i] == 0) ? "white" : "black";
-                context.fillRect(22+8*x, 8*y, 8, 8);
-                i++;
-            }
-        }
-    </script>
+    <div id="vue-form">
+        <div class="vue-form_conditions">
+            <div class="vue-form_condition">Id:<input id="vue-form_id" type="text" size=6 :value="id"></div>
+            <span v-if="!id_status" class="vue-form_error">В Id должно быть 10 символов!!!</span>
+            <div class="vue-form_condition">Code:<input id="vue-form_code" type="number" min=0 max=999 :value="code"></div>
+            <div class="vue-form_condition">Message:<input id="vue-form_message" type="text" size=20 :value="message"></div>
+            <div class="vue-form_condition"><input type="button" value="Сформировать баркод" @click="checkForm"></div>
+        </div>
+        <div id="barcode"></div>
+    </div>
+    <script src="vue-form.js"></script>
+    <script src="barcode.js"></script>
 </body>
 </html>
