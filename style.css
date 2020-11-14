@@ -24,8 +24,10 @@ body {
 .vue-form_condition {
     font: 16px sans-serif;
     color: white;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
+
+.vue-form_condition:first-child {margin-top: 0;}
 
 .vue-form_condition input {
     margin-left: 10px;

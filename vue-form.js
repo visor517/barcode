@@ -1,15 +1,17 @@
 new Vue ({
     el: '#vue-form',
     data: {
-        id: 'ezeb2fve0b',
-        code: 10,
-        message: '404 Error coffee not found',
-        id_status: true
+        input: {
+            id: 'ezeb2fve0b',
+            code: 10,
+            message: '404 Error coffee not found'
+        },
+        isIdError: Boolean,
+        isCodeError: Boolean
     },
     methods: {
-        checkForm() {
-            if (this.id.length != 10) this.id_status = false;
-            else renderBarcode();
+        vueBarcode() {
+            renderBarcode(this.input);
         }
     }
 })

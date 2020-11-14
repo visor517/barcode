@@ -10,11 +10,12 @@
 <body>
     <div id="vue-form">
         <div class="vue-form_conditions">
-            <div class="vue-form_condition">Id:<input id="vue-form_id" type="text" size=6 :value="id"></div>
-            <span v-if="!id_status" class="vue-form_error">В Id должно быть 10 символов!!!</span>
-            <div class="vue-form_condition">Code:<input id="vue-form_code" type="number" min=0 max=999 :value="code"></div>
-            <div class="vue-form_condition">Message:<input id="vue-form_message" type="text" size=20 :value="message"></div>
-            <div class="vue-form_condition"><input type="button" value="Сформировать баркод" @click="checkForm"></div>
+            <div class="vue-form_condition">Id:<input id="vue-form_id" type="text" size=8 v-model="input.id"></div>
+            <span v-if="isIdError = input.id.length != 10" class="vue-form_error">В Id должно быть 10 символов!!!</span>
+            <div class="vue-form_condition">Code:<input id="vue-form_code" type="number" min=0 max=999 v-model="input.code"></div>
+            <span v-if="isCodeError = input.code < 0 || input.code > 999" class="vue-form_error">Code от 0 до 999 !!!</span>
+            <div class="vue-form_condition">Message:<input id="vue-form_message" type="text" size=20 v-model="input.message"></div>
+            <div class="vue-form_condition"><input type="button" value="Сформировать баркод" @click="vueBarcode" :disabled='isIdError || isCodeError'></div>
         </div>
         <div id="barcode"></div>
     </div>
